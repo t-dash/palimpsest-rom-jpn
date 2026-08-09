@@ -1,0 +1,61 @@
+IDEAL PROMPT TO REPRODUCE THIS PROJECT
+=======================================
+
+Build an interactive scrollytelling data visualization comparing the linguistic
+histories of Japanese and Romanian. The concept is "language as palimpsest" —
+each historical era left a layer of loanwords from a dominant neighboring power,
+and both languages share the pattern of being linguistic outliers next to empires.
+
+LAYOUT & STYLE:
+- NYT interactive style (white bg, serif body text, sans-serif UI, no sepia/brown).
+  Use Noto Serif, Source Sans 3, and Noto Sans JP from Google Fonts.
+- Colors: Japan = #c23b22 (red), Romania = #003da5 (blue), source countries = gold (#f0c040).
+- Scrollytelling layout: sticky left panel with map + word card, scrollable right
+  column with era context cards. Scrolling down moves through 7 time periods.
+  Left/right arrow keys (or clickable tabs) switch between Romania and Japan views.
+- Romania tab on the left, Japan tab on the right. Active tab is opaque with
+  colored underline; inactive tab is translucent.
+
+MAP:
+- Use a CC/public domain world map SVG with country-level path IDs (e.g., Wikimedia
+  low-resolution world map). Load into an offscreen container for getBBox() calculations.
+- Dynamic zoom: compute the SVG viewBox at runtime to fit the destination country
+  (Japan islands or Romania) plus all source countries for that era. Add 20% padding.
+  Animate viewBox transitions with easeInOutQuad over 400ms.
+- Highlight destination country in its color, source countries in gold.
+- Draw curved dashed arrows from source countries to destination. Arcs bow upward —
+  subtle for short distances (dist * 0.05), more dramatic for long ones (dist * 0.15).
+  Animated dash flow.
+- For US-related eras: highlight ALL US territories (mainland, both Alaskas, Hawaii,
+  Aleutian islands) but only draw arrow from mainland US (`usa` ID). The line should
+  cross eastward over Eurasia/Africa to reach Japan.
+
+DATA:
+- Separate data.json file with: meta (title, subtitle, tagline), eras array (7 periods
+  from prehistory to 21st century), each era having japan and romania objects with
+  layer name and word examples, plus a context string. Also kaki section and arrows array.
+- SOURCE_MAP in JS mapping each era ID to highlight and arrowFrom arrays per side.
+  This separation allows highlighting countries without drawing arrows from all of them.
+- The 7 eras: Pre-history (Proto-Japonic / Latin), 5th Century (Chinese Buddhist /
+  South Slavic), 15th Century (Chinese later / Turkish-Arabic), 17th Century
+  (Portuguese-Dutch / German-Yiddish-Roma), 19th Century (English-German / French),
+  20th Century (American / Soviet-Russian), 21st Century (Internet / Globalization).
+
+SECTIONS (top to bottom):
+1. Masthead header
+2. Hero with title, italic subtitle, tagline
+3. Placeholder image (ruxie.jpeg) — will become yon-koma manga preamble
+4. Scrollytelling section (main visualization)
+5. Kaki (persimmon) interlude — the word かき traveled Japanese → French → Romanian
+6. Placeholder image (yippe_unicorn_rainbow.jpg) — will become yon-koma manga postamble
+7. Footer
+
+TECHNICAL:
+- Single index.html, no build step, no framework. Vanilla JS + CSS.
+- IntersectionObserver for scroll-triggered era changes.
+- Map SVG is parsed once, inserted into DOM. Arrow overlay is a separate SVG layered
+  on top with pointer-events: none.
+- CSS scoping: country path styles (fill, highlight classes) target only the map SVG
+  via `svg:first-child` selector, not the arrow overlay SVG.
+- Include update-data.sh script that can download the Google Sheet as CSV for
+  refreshing data.json.
