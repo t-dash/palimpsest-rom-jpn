@@ -1,0 +1,62 @@
+# Quilted Languages
+
+> A website using etymologies and loanwords in Japanese and Romanian to display the ultimately unifying aspects of languages.
+
+A website using etymologies and loanwords in Japanese and Romanian to display the ultimately unifying aspects of languages that are often used as national identifiers in opposition to neighbors or other nearby language/cultural groups.
+
+- Made by Taizo Wiggins, a student project.
+- Organised by era (Pre-history to the 2000s), with a Romania side and a Japan side; the blog has the longer story for each.
+- Each word and blog section lists the sources it cites; some sources are still being added.
+- Disputed etymologies are marked disputed and show each view with its own sources.
+- The site collects nothing from visitors: no forms, accounts or cookies of its own.
+
+## Pages
+- [Quilted Languages](https://t-dash.github.io/palimpsest-rom-jpn/): A website using etymologies and loanwords in Japanese and Romanian to display the ultimately unifying aspects of languages.
+- [Blog](https://t-dash.github.io/palimpsest-rom-jpn/blog/): The longer stories behind each word in Quilted Languages, era by era, for Romania and Japan, with the sources for each section.
+- [Credits](https://t-dash.github.io/palimpsest-rom-jpn/credits/): Who made Quilted Languages, why, and the sources for its words, maps and fonts.
+- [Resources](https://t-dash.github.io/palimpsest-rom-jpn/resources/): Teaching materials and further reading about loanwords in Romanian and Japanese.
+- [All words](https://t-dash.github.io/palimpsest-rom-jpn/explore/): Search every word in Quilted Languages by language, the language it came from, era and kind of contact.
+- [Privacy](https://t-dash.github.io/palimpsest-rom-jpn/privacy/): Quilted Languages has no forms, accounts or cookies of its own. What the site and its host collect.
+
+## Words (39)
+- [cafea](https://t-dash.github.io/palimpsest-rom-jpn/words/cafea/): Romanian, “coffee”, from Ottoman Turkish, 1400s CE
+- [cheltui](https://t-dash.github.io/palimpsest-rom-jpn/words/cheltui/): Romanian, “to spend (money)”, from Hungarian, 1600s CE
+- [chiftea](https://t-dash.github.io/palimpsest-rom-jpn/words/chiftea/): Romanian, “meatball”, from Ottoman Turkish, 1400s CE
+- [cioban](https://t-dash.github.io/palimpsest-rom-jpn/words/cioban/): Romanian, “shepherd”, from Ottoman Turkish, 1400s CE
+- [ciorbă](https://t-dash.github.io/palimpsest-rom-jpn/words/ciorba/): Romanian, “soup”, from Ottoman Turkish, 1400s CE
+- [dragoste](https://t-dash.github.io/palimpsest-rom-jpn/words/dragoste/): Romanian, “love, endearment”, from Old Church Slavonic, 500s CE
+- [fel](https://t-dash.github.io/palimpsest-rom-jpn/words/fel/): Romanian, “type, sort”, from Hungarian, 1600s CE
+- [fiică](https://t-dash.github.io/palimpsest-rom-jpn/words/fiica/): Romanian, “daughter”, from Latin, Pre-history
+- [fiu](https://t-dash.github.io/palimpsest-rom-jpn/words/fiu/): Romanian, “son”, from Latin, Pre-history
+- [frate](https://t-dash.github.io/palimpsest-rom-jpn/words/frate/): Romanian, “brother”, from Latin, Pre-history
+- [gazdă](https://t-dash.github.io/palimpsest-rom-jpn/words/gazda/): Romanian, “host”, from Hungarian, 1600s CE
+- [gând](https://t-dash.github.io/palimpsest-rom-jpn/words/gand/): Romanian, “thought”, from Hungarian, 1600s CE
+- [iubire](https://t-dash.github.io/palimpsest-rom-jpn/words/iubire/): Romanian, “love”, from South Slavic, 500s CE
+- [mamă](https://t-dash.github.io/palimpsest-rom-jpn/words/mama/): Romanian, “mother”, from Latin, Pre-history
+- [musacă](https://t-dash.github.io/palimpsest-rom-jpn/words/musaca/): Romanian, “moussaka”, from Ottoman Turkish, 1400s CE
+- [nevastă](https://t-dash.github.io/palimpsest-rom-jpn/words/nevasta/): Romanian, “wife”, from Old Church Slavonic, 500s CE
+- [oraș](https://t-dash.github.io/palimpsest-rom-jpn/words/oras/): Romanian, “city”, from Hungarian, 1600s CE
+- [pilaf](https://t-dash.github.io/palimpsest-rom-jpn/words/pilaf/): Romanian, “pilaf”, from Ottoman Turkish, 1400s CE
+- [prieten](https://t-dash.github.io/palimpsest-rom-jpn/words/prieten/): Romanian, “friend”, from Old Church Slavonic, 500s CE
+- [sfânt](https://t-dash.github.io/palimpsest-rom-jpn/words/sfant/): Romanian, “saint”, from Old Church Slavonic, 500s CE
+- [slavă](https://t-dash.github.io/palimpsest-rom-jpn/words/slava/): Romanian, “glory, hail”, from Old Church Slavonic, 500s CE
+- [soră](https://t-dash.github.io/palimpsest-rom-jpn/words/sora/): Romanian, “sister”, from Latin, Pre-history
+- [tată](https://t-dash.github.io/palimpsest-rom-jpn/words/tata/): Romanian, “father”, from Latin, Pre-history
+- [愛 (ai)](https://t-dash.github.io/palimpsest-rom-jpn/words/ai/): Japanese, “love”, from Middle Chinese, 500s CE
+- [愛情 (aijou)](https://t-dash.github.io/palimpsest-rom-jpn/words/aijou/): Japanese, “love”, from Middle Chinese, 500s CE
+- [姉 (ane)](https://t-dash.github.io/palimpsest-rom-jpn/words/ane/): Japanese, “older sister”, from Old Japanese, Pre-history
+- [兄 (ani)](https://t-dash.github.io/palimpsest-rom-jpn/words/ani/): Japanese, “older brother”, from Old Japanese, Pre-history
+- [ビー玉 (bīdama)](https://t-dash.github.io/palimpsest-rom-jpn/words/bidama/): Japanese, “marble”, from Portuguese, 1600s CE
+- [父 (chichi)](https://t-dash.github.io/palimpsest-rom-jpn/words/chichi/): Japanese, “father”, from Old Japanese, Pre-history
+- [ゴム (gomu)](https://t-dash.github.io/palimpsest-rom-jpn/words/gomu/): Japanese, “rubber”, from Dutch, 1600s CE
+- [母 (haha)](https://t-dash.github.io/palimpsest-rom-jpn/words/haha/): Japanese, “mother”, from Old Japanese, Pre-history
+- [妹 (imouto)](https://t-dash.github.io/palimpsest-rom-jpn/words/imouto/): Japanese, “little sister”, from Old Japanese, Pre-history
+- [かるた (karuta)](https://t-dash.github.io/palimpsest-rom-jpn/words/karuta/): Japanese, “a card game”, from Portuguese, 1600s CE
+- [人間 (ningen)](https://t-dash.github.io/palimpsest-rom-jpn/words/ningen/): Japanese, “human being”, from Middle Chinese, 500s CE
+- [弟 (otouto)](https://t-dash.github.io/palimpsest-rom-jpn/words/otouto/): Japanese, “little brother”, from Old Japanese, Pre-history
+- [パン (pan)](https://t-dash.github.io/palimpsest-rom-jpn/words/pan/): Japanese, “bread”, from Portuguese, 1600s CE
+- [ランドセル (randoseru)](https://t-dash.github.io/palimpsest-rom-jpn/words/randoseru/): Japanese, “a traditional Japanese hard backpack”, from Dutch, 1600s CE
+- [タバコ (tabako)](https://t-dash.github.io/palimpsest-rom-jpn/words/tabako/): Japanese, “cigarettes”, from Portuguese, 1600s CE
+- [友情 (yuujou)](https://t-dash.github.io/palimpsest-rom-jpn/words/yuujou/): Japanese, “friendship”, from Middle Chinese, 500s CE
+
+Every word with its sources: https://t-dash.github.io/palimpsest-rom-jpn/llms-full.txt

@@ -1,0 +1,45 @@
+{
+  "name": "quilted-languages",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --host 127.0.0.1 --port 8095 --strictPort",
+    "build": "npm run check:words && npm run fonts:ja && vite build",
+    "start": "vite preview",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "check:words": "node --no-warnings --experimental-strip-types scripts/check-words.mjs",
+    "fonts:ja": "node --no-warnings --experimental-strip-types scripts/subset-ja-font.mjs",
+    "check:sources": "node --no-warnings --experimental-strip-types scripts/check-sources.mjs",
+    "pages": "node scripts/export-pages.mjs",
+    "brand": "node scripts/make-brand.mjs && python scripts/make-ico.py"
+  },
+  "dependencies": {
+    "@fontsource-variable/source-sans-3": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
+    "@radix-ui/react-slot": "^1.3.3",
+    "@supabase/supabase-js": "^2.117.2",
+    "@tanstack/react-router": "^1.170.41",
+    "@tanstack/react-start": "^1.168.60",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "d3-geo": "3.1.1",
+    "lucide-react": "^1.49.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwind-merge": "^3.7.0"
+  },
+  "devDependencies": {
+    "@fontsource-variable/noto-sans-jp": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/d3-geo": "3.1.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.6",
+    "vite-tsconfig-paths": "^6.1.1"
+  }
+}

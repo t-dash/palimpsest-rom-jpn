@@ -1,42 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Resources — Quilted Languages</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/pages.css">
-</head>
-<body data-page="resources"><script src="js/nav.js"></script>
-<main class="page resources">
-  <h1 class="page-title">Resources</h1>
-  <p class="intro">Printable PDFs for teaching and further study: handouts, worksheets and a teacher's guide to the layers of Romanian and Japanese.</p>
-  <div class="res-grid" id="res-grid"><p class="loading">Loading…</p></div>
-</main>
-<script>
-(function () {
-  var grid = document.getElementById('res-grid');
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  fetch('data/resources.json')
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (data) {
-      grid.innerHTML = data.resources.map(function (r) {
-        var tags = (r.tags || []).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('');
-        return '<article class="res-card">' +
-          '<a class="res-thumb" href="' + esc(r.file) + '" target="_blank" rel="noopener"><img src="' + esc(r.thumb) + '" alt="" loading="lazy"></a>' +
-          '<div class="res-body">' +
-            '<h2>' + esc(r.title) + '</h2>' +
-            '<p>' + esc(r.description) + '</p>' +
-            '<div class="res-foot"><div class="tags">' + tags + '</div>' +
-            '<a class="pdf-btn" href="' + esc(r.file) + '" download>PDF</a></div>' +
-          '</div></article>';
-      }).join('');
-    })
-    .catch(function () { grid.innerHTML = '<p class="loading">Could not load resources.</p>'; });
-})();
-</script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Quilted Languages</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://t-dash.github.io/palimpsest-rom-jpn/resources/">
+<meta http-equiv="refresh" content="0; url=/palimpsest-rom-jpn/resources/">
+<script>var h=location.hash.replace(/^#romania-/,"#ro-").replace(/^#japan-/,"#ja-");location.replace("/palimpsest-rom-jpn/resources/"+h);</script>
+</head><body><p><a href="/palimpsest-rom-jpn/resources/">Quilted Languages</a></p></body></html>

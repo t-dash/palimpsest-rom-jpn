@@ -1,0 +1,269 @@
+@import "tailwindcss";
+/* Self-hosted fonts (no third-party font requests). Variable per-axis files
+   only: they carry unicode-range per subset, so latin-ext (ș ț ă â î) loads
+   only on pages that use it (build-lessons trap 8). Keep arrows etc. as
+   icons, not characters. */
+@import "@fontsource-variable/source-serif-4/opsz.css";
+@import "@fontsource-variable/source-sans-3/wght.css";
+/* Noto Sans JP, only the slices words.ts needs (scripts/subset-ja-font.mjs). */
+@import "./styles/ja-font.css";
+
+/* ------------------------------------------------------------------
+   Quilted Languages — Taizo's palette (design doc, 13 Oct 2026):
+   #02101f · #03254c · #1f4068 · #e0e7ff, "the middle two for the content,
+   the background the lighter colour", a lighter-blue top bar, a navy void.
+   Measured with tools/palette.py (13 Oct 2026):
+   ink #03254c on paper 12.41 · on surface 15.30 · on bar 9.85
+   blue #1f4068 on paper 8.56 (links) · white on blue 10.54 (buttons)
+   muted #3d5480 on paper 6.13 · on bar 4.87 · on surface 7.56
+   paper on void 15.54 · paper on ink 12.41 · mist #a9b8e3 on void 9.72
+   never: ink on void (1.25), mist/thread on paper (1.60)
+   ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #03254c;
+  --color-muted: #3d5480;
+  --color-blue: #1f4068;
+  --color-void: #02101f;
+  --color-bar: #c3cff2;
+  --color-mist: #a9b8e3;
+  --color-thread: #a9b8e3;
+  --color-paper: #e0e7ff;
+  --color-surface: #ffffff;
+
+  --font-sans: "Source Sans 3 Variable", "Source Sans 3", system-ui, sans-serif;
+  --font-display: "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
+  --font-ja: "Noto Sans JP Variable", "Hiragino Sans", "Yu Gothic", "Noto Sans CJK JP", sans-serif;
+
+  /* Fluid type: 17px@320 → 19px@1440, ratio 1.2 → 1.28 */
+  --text-step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --text-step-0: clamp(1.0625rem, 1.03rem + 0.18vw, 1.1875rem);
+  --text-step-1: clamp(1.275rem, 1.21rem + 0.33vw, 1.52rem);
+  --text-step-2: clamp(1.53rem, 1.42rem + 0.6vw, 1.95rem);
+  --text-step-3: clamp(1.836rem, 1.65rem + 1vw, 2.49rem);
+  --text-step-4: clamp(2rem, 1.62rem + 1.9vw, 4rem);
+}
+
+/* Donor-language colours (PROPOSED). Graphics only — each ≥ 3:1 on the
+   lavender paper (measured 13 Oct): latin 6.70 · slavic 4.19 · greek 3.68 ·
+   turkish 4.43 · hungarian 5.05 · french 5.59 · chinese 3.15 ·
+   portuguese 4.16 · dutch 3.63 · english 4.86 · other (slate) 4.86. Never text. Always paired
+   with a pattern (PatternTile, src/components/signature/quilt/donors.ts) and
+   a text label: colour is never the only cue.
+   The Codex quilt reads --ql-donor-<name>, mapped below. */
+:root {
+  --donor-latin: #3b4a8c;
+  --donor-slavic: #1f7a6d;
+  --donor-greek: #2b7bb9;
+  --donor-turkish: #b5452a;
+  --donor-hungarian: #7a5c1e;
+  --donor-french: #8e3b78;
+  --donor-chinese: #a8790e;
+  --donor-portuguese: #2e7d32;
+  --donor-dutch: #c4561b;
+  --donor-english: #5a6474;
+  --donor-other: #5a6474;
+
+  color-scheme: light;
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 360ms;
+  --ease-out: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-in: cubic-bezier(0.3, 0, 1, 1);
+  --stitch: rgb(255 255 255 / 0.42);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    background: var(--color-paper);
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-step-0);
+    line-height: 1.55;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: break-word;
+  }
+  /* Content only: long words (Romanian compounds, long source URLs) may break
+     anywhere instead of pushing the page sideways; text still wraps at spaces
+     first. Not on the header/footer, where it split "Menu" at 320px. */
+  main,
+  .ql-tooltip {
+    overflow-wrap: anywhere;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    hyphens: auto;
+  }
+  [lang="ja"] {
+    font-family: var(--font-ja);
+  }
+  a {
+    color: var(--color-blue);
+    text-underline-offset: 0.18em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-site {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1240px;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2.5rem;
+    }
+  }
+  /* Small tracked label: carries information (place, type), never decoration. */
+  .label {
+    font-family: var(--font-sans);
+    font-size: var(--text-step--1);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .link {
+    color: var(--color-blue);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+  .prose-site {
+    max-width: 65ch;
+  }
+  .prose-site > * + * {
+    margin-top: 1em;
+  }
+
+  /* The stitched rule: a dashed "thread" line, the site's divider. */
+  .stitch {
+    height: 0;
+    border: 0;
+    border-top: 2px dashed var(--color-thread);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Signature quilt (src/components/signature, from Codex, 7 Oct 2026).
+   Token mapping: the site's tokens win; Codex defaults stay only as the
+   fallbacks inside donors.ts (var(--ql-donor-x, fallback)).
+   ------------------------------------------------------------------ */
+:root {
+  --ql-ink: var(--color-ink);
+  --ql-paper: var(--color-paper);
+  --ql-blue: var(--color-blue);
+  --ql-thread: var(--color-thread);
+  --ql-donor-latin: var(--donor-latin);
+  --ql-donor-slavic: var(--donor-slavic);
+  --ql-donor-greek: var(--donor-greek);
+  --ql-donor-turkish: var(--donor-turkish);
+  --ql-donor-hungarian: var(--donor-hungarian);
+  --ql-donor-french: var(--donor-french);
+  --ql-donor-chinese: var(--donor-chinese);
+  --ql-donor-portuguese: var(--donor-portuguese);
+  --ql-donor-dutch: var(--donor-dutch);
+  --ql-donor-english: var(--donor-english);
+}
+
+.ql-quilt { width: 100%; color: var(--ql-ink); }
+.ql-quilt__panels { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); align-items: stretch; padding: clamp(12px, 2vw, 20px); border: 2px dashed var(--ql-thread); border-radius: 6px; background-color: var(--color-surface); background-image: radial-gradient(rgb(20 33 61 / 0.035) 0.7px, transparent 0.7px); background-size: 6px 6px; }
+.ql-panel { min-width: 0; }
+.ql-panel__header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; min-height: 32px; padding: 0 2px 8px; border-bottom: 1px solid var(--ql-thread); font-size: var(--text-step--1); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-muted); }
+.ql-panel__header span:last-child { font-weight: 400; letter-spacing: 0; text-transform: none; }
+.ql-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: clamp(4px, 0.6vw, 8px); padding-top: 12px; }
+.ql-cell { position: relative; min-width: 0; }
+.ql-cell--group-start::before { content: ""; position: absolute; inset: -4px auto -4px -4px; width: 2px; border-left: 2px dashed var(--ql-thread); pointer-events: none; }
+.ql-patch { position: relative; display: block; width: 100%; min-width: 44px; min-height: 44px; aspect-ratio: 1; border-radius: 4px; background: var(--ql-thread); transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-base) ease; }
+.ql-patch svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ql-patch:hover, .ql-patch:focus-visible, .ql-patch--active { z-index: 4; transform: translateY(-3px); }
+.ql-patch:focus-visible { outline: 3px solid var(--ql-ink); outline-offset: 2px; }
+.ql-patch--muted { opacity: 0.25; filter: grayscale(1); }
+.ql-tooltip { position: absolute; z-index: 20; left: 50%; bottom: calc(100% + 10px); display: grid; width: max-content; max-width: 230px; gap: 2px; padding: 10px 12px; color: var(--color-paper); border-radius: 6px; background: var(--ql-ink); transform: translateX(calc(-50% + var(--ql-shift, 0px))); pointer-events: none; font-size: 0.875rem; line-height: 1.35; }
+.ql-tooltip::after { content: ""; position: absolute; left: calc(50% - 6px - var(--ql-shift, 0px)); top: 100%; border: 6px solid transparent; border-top-color: var(--ql-ink); }
+.ql-tooltip strong { font-family: var(--font-display); font-size: 1.05rem; }
+.ql-tooltip strong[lang="ja"] { font-family: var(--font-ja); }
+.ql-tooltip small { margin-top: 4px; font-size: 0.8125rem; color: var(--color-thread); }
+.ql-quilt__seam { display: grid; place-items: stretch center; margin: 0 8px; }
+.ql-quilt__seam span { width: 10px; border-left: 2px dashed var(--ql-blue); border-right: 2px dashed var(--ql-blue); opacity: 0.55; }
+.ql-legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.ql-legend__item { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; padding: 6px 10px 6px 6px; border: 1px solid var(--ql-thread); border-radius: 6px; color: var(--ql-ink); background: var(--color-surface); font-size: 0.9375rem; }
+button.ql-legend__item { cursor: pointer; }
+a.ql-legend__item { text-decoration: none; }
+a.ql-legend__item:hover, button.ql-legend__item:hover { border-color: var(--ql-ink); }
+.ql-legend__item[aria-current="true"], .ql-legend__item[aria-pressed="true"] { color: var(--color-paper); background: var(--ql-ink); border-color: var(--ql-ink); }
+.ql-legend__item svg { width: 28px; height: 28px; border-radius: 4px; }
+.ql-legend__count { display: grid; min-width: 24px; height: 24px; place-items: center; border-radius: 99px; background: rgb(201 211 227 / 0.45); font-size: 0.8125rem; }
+.ql-legend__item[aria-current="true"] .ql-legend__count, .ql-legend__item[aria-pressed="true"] .ql-legend__count { background: rgb(255 255 255 / 0.18); }
+.ql-swatch { display: inline-block; flex: 0 0 auto; }
+.ql-swatch svg { display: block; width: 100%; height: 100%; }
+.ql-swatch--sm { width: 18px; height: 18px; }
+.ql-swatch--md { width: 28px; height: 28px; }
+.ql-swatch--lg { width: 44px; height: 44px; }
+.ql-seam-divider { width: 100%; color: var(--ql-blue); }
+.ql-seam-divider svg { display: block; width: 100%; height: 18px; }
+.ql-seam-divider path { fill: none; stroke: currentColor; stroke-width: 2; stroke-dasharray: 9 7; opacity: 0.65; }
+.ql-seam-divider--cross path + path { stroke-dashoffset: 8; }
+
+@media (max-width: 767px) {
+  .ql-quilt__panels { grid-template-columns: 1fr; padding: 12px; }
+  .ql-quilt__seam { height: 24px; margin: 10px 0; place-items: center stretch; }
+  .ql-quilt__seam span { width: auto; height: 10px; border: 0; border-top: 2px dashed var(--ql-blue); border-bottom: 2px dashed var(--ql-blue); }
+  .ql-grid { gap: 5px; }
+  .ql-tooltip { position: fixed; left: 12px; right: 12px; bottom: 12px; width: auto; max-width: none; transform: none; }
+  .ql-tooltip::after { display: none; }
+  .ql-legend__item { flex: 1 1 132px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ql-patch:hover, .ql-patch:focus-visible, .ql-patch--active { transform: none; }
+}
+
+/* Home: the hero globe floats gently ("a floating, idle globe"); switching
+   Romania <-> Japan slides the new side in (Taizo: "just have it slide").
+   Both are off under reduced motion. Transform/opacity only. */
+@keyframes globe-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.globe-float {
+  animation: globe-float 7s ease-in-out infinite;
+}
+@keyframes era-enter-left {
+  from { opacity: 0; transform: translateX(-28px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes era-enter-right {
+  from { opacity: 0; transform: translateX(28px); }
+  to { opacity: 1; transform: none; }
+}
+.era-enter-left { animation: era-enter-left var(--dur-slow) var(--ease-out) both; }
+.era-enter-right { animation: era-enter-right var(--dur-slow) var(--ease-out) both; }
+@media (prefers-reduced-motion: reduce) {
+  .globe-float, .era-enter-left, .era-enter-right { animation: none; }
+}

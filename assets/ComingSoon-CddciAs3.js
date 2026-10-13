@@ -1,0 +1,1 @@
+import{j as e,e as a,a as n}from"./index-CdlgEawj.js";function c({line:s,label:o=a.common.comingSoon,className:r}){return e.jsxs("div",{className:n("max-w-[60ch] border-l-2 border-dashed border-blue py-1 pl-4",r),children:[e.jsx("p",{className:"label text-muted",children:o}),e.jsx("p",{className:"mt-1",children:s})]})}export{c as C};

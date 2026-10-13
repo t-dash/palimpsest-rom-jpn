@@ -1,0 +1,16 @@
+node_modules
+dist
+.output
+.vinxi
+.tanstack
+.wrangler
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.claude/
+CLAUDE.md
+# Planning packs and student source files never go into the student's repo
+_internal/
+_source/

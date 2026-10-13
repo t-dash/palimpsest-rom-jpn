@@ -1,0 +1,6 @@
+export { PatchSwatch } from './PatchSwatch'
+export type { PatchSwatchProps } from './PatchSwatch'
+export { SeamDivider } from './SeamDivider'
+export type { SeamDividerProps } from './SeamDivider'
+export { Needle, Thread, Globe, Scroll, Search, Filter } from './icons'
+export type { IconProps } from './icons'
