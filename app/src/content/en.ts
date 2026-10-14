@@ -256,7 +256,6 @@ export const en = {
   },
 
   privacy: {
-    label: "Privacy",
     title: "Privacy",
     lede: draft("What this site collects about you: very little."),
     sections: [
@@ -290,6 +289,9 @@ export const en = {
     title: "Something went wrong",
     body: draft("This page didn't load. Try again, or go back to the word list."),
     retry: "Try again",
+    offlineTitle: "You're offline",
+    offlineBody: draft("This page needs an internet connection to load. Check your connection, then try again."),
+    home: "Back to Quilted Languages",
   },
 
   notFound: {

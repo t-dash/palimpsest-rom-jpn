@@ -27,20 +27,22 @@ function Home() {
     <>
       {/* 1 — The navy void: title, tag line, his one-line idea, the idle globe */}
       <section className="relative overflow-hidden bg-void text-paper">
-        <div className="container-site grid min-h-[calc(100svh-61px)] content-start gap-8 pb-12 pt-10 md:pt-16 lg:grid-cols-12 lg:items-start lg:gap-10">
+        {/* Fills the first screen under the bar; on wide screens the title and
+            the globe sit in its middle instead of leaving a gap below. */}
+        <div className="container-site grid min-h-[calc(100svh-var(--header-h))] content-start gap-8 pb-12 pt-10 md:pt-16 lg:grid-cols-12 lg:content-center lg:items-center lg:gap-10 lg:py-16">
           <div className="lg:col-span-7 lg:pl-[4%]">
             <h1 className="text-[length:var(--text-step-4)] leading-[1.02]">{c.title}</h1>
             <p className="mt-4 max-w-[30ch] font-display text-[length:var(--text-step-2)] italic leading-snug text-mist">{c.tagline}</p>
             <p className="mt-6 max-w-[58ch] text-paper/90">{c.intro}</p>
             <a
               href="#eras"
-              className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-[6px] border-[1.5px] border-paper px-5 font-semibold text-paper no-underline hover:bg-paper hover:text-void"
+              className="group mt-8 inline-flex min-h-11 items-center gap-2 rounded-[6px] border-[1.5px] border-paper px-5 font-semibold text-paper no-underline transition-colors duration-[var(--dur-fast)] hover:bg-paper hover:text-void"
             >
               {c.scrollCue}
-              <ArrowDown strokeWidth={1.75} className="size-5" aria-hidden="true" />
+              <ArrowDown strokeWidth={1.75} className="size-5 transition-transform duration-[var(--dur-base)] ease-[var(--ease-out)] group-hover:translate-y-0.5" aria-hidden="true" />
             </a>
           </div>
-          <div className="mx-auto w-full max-w-[min(100%,32rem)] lg:col-span-5 lg:mt-6">
+          <div className="mx-auto w-full max-w-[min(100%,32rem)] lg:col-span-5">
             <div className="globe-float">
               <GlobeSlot focus="world" idle labels={{ ro: en.panels.ro, ja: en.panels.ja }} ariaLabel={c.globeLabel.world} />
             </div>
@@ -53,7 +55,7 @@ function Home() {
 
       {/* 3 — Every word, sewn together (the quilt) */}
       <section aria-labelledby="all-words" className="bg-surface py-14 md:py-20">
-        <div className="container-site">
+        <div className="reveal container-site">
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <SectionHead id="all-words" title={c.quilt.title} />
@@ -92,7 +94,7 @@ function Home() {
             )}
             <Link
               to="/credits"
-              className="mt-6 inline-flex min-h-11 items-center rounded-[6px] border-[1.5px] border-paper px-5 font-semibold text-paper no-underline hover:bg-paper hover:text-ink"
+              className="mt-6 inline-flex min-h-11 items-center rounded-[6px] border-[1.5px] border-paper px-5 font-semibold text-paper no-underline transition-colors duration-[var(--dur-fast)] hover:bg-paper hover:text-ink"
             >
               {c.why.more}
             </Link>

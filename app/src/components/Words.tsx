@@ -28,25 +28,30 @@ export function Swatch({ donor, size = "sm", className }: { donor: string; size?
   );
 }
 
-/** One line of the word list: word (+ reading), meaning, donor, period. */
+/**
+ * One line of the word list: word (+ reading), meaning, donor, period.
+ * The columns have fixed widths from md up, so every row lines up with the
+ * next (they used to size themselves row by row and zig-zag). On phones:
+ * word and era on the first line, then the meaning, then the donor.
+ */
 export function WordRow({ word }: { word: Word }) {
   return (
     <li className="border-b border-thread">
       <Link
         to="/words/$slug"
         params={{ slug: word.slug }}
-        className="group grid min-h-14 grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-6 gap-y-1 py-4 text-ink no-underline md:grid-cols-[minmax(0,1.1fr)_minmax(0,2fr)_minmax(0,1fr)_auto]"
+        className="group -mx-2 grid min-h-14 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 rounded-[6px] px-2 py-4 text-ink no-underline transition-colors duration-[var(--dur-fast)] [overflow-wrap:normal] hover:bg-surface/70 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_minmax(0,12rem)_7rem] md:gap-x-6"
       >
-        <span className="font-display text-[length:var(--text-step-1)] font-semibold group-hover:underline group-focus-visible:underline">
-          <Foreign word={word} />
-          {word.reading && <span className="ml-2 font-sans text-base font-normal text-muted">{word.reading}</span>}
+        <span className="order-1 min-w-0 font-display text-[length:var(--text-step-1)] font-semibold md:order-none">
+          <Foreign word={word} className="group-hover:underline group-focus-visible:underline" />
+          {word.reading && <span className="ml-2 whitespace-nowrap font-sans text-base font-normal text-muted">{word.reading}</span>}
         </span>
-        <span className="col-span-2 text-muted md:col-span-1">{word.meaning}</span>
-        <span className="flex items-center gap-2 text-[length:var(--text-step--1)]">
+        <span className="order-3 col-span-2 text-muted md:order-none md:col-span-1">{word.meaning}</span>
+        <span className="order-4 col-span-2 flex items-center gap-2 text-[length:var(--text-step--1)] md:order-none md:col-span-1">
           <Swatch donor={word.donor} />
           {word.donor}
         </span>
-        <span className="text-[length:var(--text-step--1)] text-muted md:text-right">{eraLabel(word.era)}</span>
+        <span className="order-2 whitespace-nowrap text-right text-[length:var(--text-step--1)] text-muted md:order-none">{eraLabel(word.era)}</span>
       </Link>
     </li>
   );
@@ -60,7 +65,7 @@ export function WordCard({ word }: { word: Word }) {
       <Link
         to="/words/$slug"
         params={{ slug: word.slug }}
-        className="group flex h-full min-h-28 overflow-hidden rounded-[6px] border border-thread bg-surface text-ink no-underline hover:border-ink"
+        className="group flex h-full min-h-28 overflow-hidden rounded-[6px] border border-thread bg-surface text-ink no-underline transition-colors duration-[var(--dur-fast)] hover:border-ink"
       >
         <span aria-hidden="true" className="w-2 shrink-0" style={{ background: color }} />
         <span className="flex flex-1 flex-col gap-1 p-4">

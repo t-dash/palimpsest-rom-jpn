@@ -49,6 +49,12 @@ Source link (https://…):
 Featured on the homepage: yes / no
 ```
 
+If the word comes from a language that isn't on the site yet, add to the
+prompt: "This donor language is new: give it its own colour and pattern in
+NAMED_DONOR_STYLES in src/components/signature/quilt/donors.ts (a colour at
+least 3:1 on the page background, a pattern no other donor uses)." Without
+it, the new language shares a colour with another one in the quilt.
+
 ## 2. Write an era section (Home timeline + Blog)
 
 ```

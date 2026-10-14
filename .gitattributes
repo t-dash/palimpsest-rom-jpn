@@ -1,0 +1,5 @@
+# Keep LF line endings in the working copy on every computer. The built site
+# and .pages-files are written by app/scripts/export-pages.mjs with LF; with
+# Windows checkouts converting them to CRLF, rebuilding showed every file as
+# changed and the clean-up list stopped matching.
+* text=auto eol=lf

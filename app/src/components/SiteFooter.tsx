@@ -24,7 +24,7 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <nav aria-label="Footer">
+        <nav id="footer-nav" aria-label="Footer">
           <ul>
             {[...c.nav, ...c.footerMore].map((item) => (
               <li key={item.to}>
@@ -51,7 +51,9 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-thread">
         <p className="container-site py-5 text-[length:var(--text-step--1)] text-muted">
-          © {new Date().getFullYear()} {en.siteName}
+          {/* The year is worked out when the page loads, so a page built in one
+              year and read in the next doesn't trip React's hydration check. */}
+          © <span suppressHydrationWarning>{new Date().getFullYear()}</span> {en.siteName}
         </p>
       </div>
     </footer>

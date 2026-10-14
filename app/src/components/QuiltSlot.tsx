@@ -1,9 +1,10 @@
+import { Link } from "@tanstack/react-router";
 import type { Word } from "@/data/types";
 import { en } from "@/content/en";
 import { eraLabel, type DonorCount } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import { withBase } from "@/lib/base";
 import { Quilt, QuiltLegend as CodexLegend, type QuiltWord } from "@/components/signature/quilt";
+import { donorSort } from "@/components/signature/quilt/donors";
 import { Swatch } from "./Words";
 import { ComingSoon } from "./ComingSoon";
 
@@ -82,23 +83,24 @@ function EmptyQuilt({ variant, className }: { variant: "compact" | "full"; class
 }
 
 /** Home legend: swatch (colour + pattern) · donor · count, each a link to the
- *  explorer filtered by that donor. */
+ *  explorer filtered by that donor. Same order as the quilt (oldest first). */
 export function QuiltLegend({ donors, className }: { donors: DonorCount[]; className?: string }) {
   if (!donors.length) return null;
   return (
     // auto-fill: as many ~14rem columns as fit, so long donor names never
     // push the row past its column (was 3 fixed columns, 3px overflow @1024).
     <ul className={cn("grid grid-cols-[repeat(auto-fill,minmax(min(14rem,100%),1fr))] gap-x-6 gap-y-1", className)}>
-      {donors.map((d) => (
+      {[...donors].sort((a, b) => donorSort(a.donor, b.donor)).map((d) => (
         <li key={d.donor} className="min-w-0">
-          <a
-            href={withBase(`/explore?donor=${encodeURIComponent(d.donor)}`)}
-            className="flex min-h-11 items-center gap-3 text-ink no-underline hover:underline"
+          <Link
+            to="/explore"
+            search={{ donor: d.donor }}
+            className="group flex min-h-11 items-center gap-3 text-ink no-underline"
           >
-            <Swatch donor={d.donor} size="md" />
-            <span className="min-w-0 font-semibold">{d.donor}</span>
+            <Swatch donor={d.donor} size="md" className="transition-transform duration-[var(--dur-fast)] ease-[var(--ease-out)] group-hover:-translate-y-0.5" />
+            <span className="min-w-0 font-semibold group-hover:underline">{d.donor}</span>
             <span className="whitespace-nowrap text-muted">{en.home.quilt.words(d.count)}</span>
-          </a>
+          </Link>
         </li>
       ))}
     </ul>

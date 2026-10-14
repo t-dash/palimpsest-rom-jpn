@@ -53,6 +53,17 @@ pattern. To add a donor: add it to `DONOR_ORDER` and `DONOR_STYLES` in
 `quilt/donors.ts`, and a `--donor-<name>` colour in `src/styles.css` measured
 ≥ 3:1 on paper.
 
+### Taizo's donor names (14 Oct 2026)
+`NAMED_DONOR_STYLES` in `quilt/donors.ts` gives each donor name used in
+`src/data/words.ts` its own colour and pattern, in era order (the quilt and
+both legends follow it): Latin diagonal · South Slavic dots · Old Church
+Slavonic grid (`--donor-church-slavonic` #8e3b78, 5.59:1) · Ottoman Turkish
+chevron · Hungarian waves · Old Japanese crosshatch (`--donor-japanese`
+#2b7bb9, 3.68:1) · Middle Chinese bricks · Portuguese rings · Dutch steps.
+Before this, five of these names fell through to the three hashed fallback
+styles, so Old Japanese, Middle Chinese and Old Church Slavonic looked
+identical. A new donor name in words.ts needs an entry here too.
+
 ### Updating with a Lovable prompt
 ```
 In src/components/signature/quilt/donors.ts, add the donor language

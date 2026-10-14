@@ -15,8 +15,8 @@ function Privacy() {
   const c = en.privacy;
   return (
     <>
-      <PageHeader label={c.label} title={c.title} lede={c.lede} />
-      <div className="container-site py-12 md:py-16">
+      <PageHeader title={c.title} lede={c.lede} />
+      <div className="container-site py-10 md:py-14">
         <div className="prose-site">
           {c.sections.map((s) => (
             <section key={s.title} className="pb-6">

@@ -41,7 +41,8 @@ if (!existsSync(join(client, "index.html"))) throw new Error("export-pages: no i
 
 // 2a. 404.html from the built server (the site's own "page not found").
 const { default: server } = await import(pathToFileURL(join(app, "dist/server/server.js")).href);
-const res = await server.fetch(new Request(`http://localhost${BASE}/this-page-does-not-exist`));
+// With a trailing slash, as the static build writes every address.
+const res = await server.fetch(new Request(`http://localhost${BASE}/this-page-does-not-exist/`));
 const html404 = await res.text();
 if (res.status !== 404 || !html404.includes("<h1")) throw new Error(`export-pages: 404 page came back ${res.status}`);
 writeFileSync(join(client, "404.html"), html404);
@@ -75,7 +76,9 @@ const files = [];
 mkdirSync(target, { recursive: true });
 const listPath = join(target, LIST);
 if (existsSync(listPath)) {
-  for (const f of readFileSync(listPath, "utf8").split("\n").filter(Boolean)) {
+  // Split on \r?\n: git may check the list out with Windows line endings, and
+  // a trailing \r would make every name miss, leaving old files behind.
+  for (const f of readFileSync(listPath, "utf8").split(/\r?\n/).map((l) => l.trim()).filter(Boolean)) {
     if (f.includes("..")) continue;
     rmSync(join(target, f), { force: true });
   }
@@ -95,5 +98,16 @@ for (const f of files) {
   mkdirSync(dirname(join(target, f)), { recursive: true });
   cpSync(join(client, f), join(target, f));
 }
+// assets/ holds only built files with hashed names: anything there that this
+// build didn't write is an old bundle (e.g. left over before the line-ending
+// fix above), so remove it.
+const built = new Set(files);
+const assetsDir = join(target, "assets");
+if (existsSync(assetsDir))
+  for (const name of readdirSync(assetsDir))
+    if (!built.has(`assets/${name}`) && statSync(join(assetsDir, name)).isFile()) {
+      rmSync(join(assetsDir, name));
+      console.log(`export-pages: removed old assets/${name}`);
+    }
 writeFileSync(listPath, files.sort().join("\n") + "\n");
 console.log(`export-pages: ${files.length} files -> ${target}`);

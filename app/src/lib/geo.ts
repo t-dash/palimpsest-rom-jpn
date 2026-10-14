@@ -40,7 +40,8 @@ export const audience = {
 
 /** Root graph on every page: the project and the website. */
 export function rootGraph() {
-  const url = site.siteUrl || undefined;
+  // The home page's address as its canonical link writes it (with the "/").
+  const url = site.siteUrl ? abs("/") : undefined;
   return {
     "@context": "https://schema.org",
     "@graph": [
