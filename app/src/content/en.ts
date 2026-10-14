@@ -28,7 +28,6 @@ export const en = {
     skipLink: "Skip to content",
     comingSoon: "Coming soon",
     opensInNewTab: "(opens in a new tab)",
-    footerNote: draft("Loanwords in Romanian and Japanese, and the empires, trade and contact behind them."),
     madeBy: "Made by",
     contact: "Contact",
     wiktionaryCredit: draft(

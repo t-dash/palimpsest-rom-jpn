@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
  * this (Blog, Credits, Resources, All words, Privacy, 404, the error page),
  * so titles sit at the same place and size from page to page. Credits passes
  * align="center" for Taizo's "simple text down the middle". Pages with
- * nothing below the header (404, error) pass rule={false}: the footer's own
- * stitched rule follows straight after.
+ * nothing below the header (404, error) pass rule={false}: the footer's
+ * lighter-blue bar follows straight after.
  */
 export function PageHeader({
   label,

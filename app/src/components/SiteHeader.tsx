@@ -11,12 +11,14 @@ import { useCurrentSection } from "@/lib/section";
  * bar (md and up), a Menu button below md. The bar is sticky, so the logo
  * and the menu are always in the same place, at any scroll position.
  *
- * The menu panel stays in the page (hidden and inert when closed) so it can
- * slide in and out; it sits right under the bar (--header-h, styles.css).
- * Focus trap, Escape, scroll lock on <html> (the reserved scrollbar gutter
- * keeps the layout still), and it closes on navigation or when the window
- * grows past md. Without JavaScript the Menu control is a link to the
- * footer's navigation.
+ * Below md, Menu opens a navy drawer about half the screen wide that slides
+ * in from the right over the dimmed page; its Close button lands where Menu
+ * was. The drawer stays in the page (hidden and inert when closed) so it can
+ * slide in and out. Focus trap; Escape, Close or a tap on the dimmed page
+ * shuts it; scroll lock on <html> (the reserved scrollbar gutter keeps the
+ * layout still); and it closes on navigation or when the window grows past
+ * md. Without JavaScript the Menu control is a link to the footer's
+ * navigation.
  */
 export function SiteHeader() {
   const c = en.common;
@@ -54,10 +56,14 @@ export function SiteHeader() {
     const panel = panelRef.current;
     const focusables = () =>
       Array.from(panel?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? []);
-    focusables()[0]?.focus({ preventScroll: true });
+    // Start on the first link; Close sits above it, where Menu was.
+    panel?.querySelector<HTMLElement>("nav a[href]")?.focus({ preventScroll: true });
     const root = document.documentElement;
-    const prevOverflow = root.style.overflow;
+    const prev = { overflow: root.style.overflow, background: root.style.backgroundColor };
     root.style.overflow = "hidden";
+    // Desktop browsers keep the scrollbar's space (scrollbar-gutter): paint it
+    // navy so it reads as part of the drawer, not a pale strip beside it.
+    root.style.backgroundColor = "var(--color-ink)";
     const close = (returnFocus: boolean) => {
       setOpen(false);
       if (returnFocus) buttonRef.current?.focus({ preventScroll: true });
@@ -89,7 +95,8 @@ export function SiteHeader() {
     return () => {
       document.removeEventListener("keydown", onKey);
       wide.removeEventListener("change", onWide);
-      root.style.overflow = prevOverflow;
+      root.style.overflow = prev.overflow;
+      root.style.backgroundColor = prev.background;
     };
   }, [open]);
 
@@ -98,12 +105,22 @@ export function SiteHeader() {
   const section = useCurrentSection();
   const navButton =
     "flex min-h-11 items-center rounded-[6px] px-4 font-semibold text-ink no-underline transition-colors duration-[var(--dur-fast)] hover:bg-paper aria-[current=page]:bg-ink aria-[current=page]:text-paper";
-  const panelLink =
-    "flex min-h-14 items-center justify-between rounded-[6px] px-3 font-display text-2xl text-ink no-underline transition-colors duration-[var(--dur-fast)] hover:bg-bar/60 aria-[current=page]:bg-ink aria-[current=page]:text-paper";
   const hashFor = (to: string) => (to === "/blog" && section ? section : undefined);
-  const menuItems = [...c.nav, ...c.footerMore];
   const toggleCls =
     "inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-[6px] px-2 text-ink no-underline transition-colors duration-[var(--dur-fast)] hover:bg-paper md:hidden";
+  const closeMenu = () => {
+    setOpen(false);
+    buttonRef.current?.focus({ preventScroll: true });
+  };
+
+  // Drawer links: Taizo's four in the serif, then All words and Privacy
+  // smaller. A small patch marks the page you're on.
+  const drawerLink =
+    "group flex items-center gap-3 rounded-[6px] px-2 no-underline transition-colors duration-[var(--dur-fast)] hover:bg-white/[0.07] active:bg-white/[0.12]";
+  const drawerItems = [
+    { items: c.nav, cls: "min-h-12 font-display text-[length:var(--text-step-2)] leading-tight text-paper" },
+    { items: c.footerMore, cls: "min-h-11 text-mist hover:text-paper aria-[current=page]:text-paper" },
+  ];
 
   return (
     <>
@@ -140,8 +157,9 @@ export function SiteHeader() {
               onClick={() => setOpen((o) => !o)}
             >
               <span className="relative size-6" aria-hidden="true">
-                <Menu strokeWidth={1.75} className={cn("absolute inset-0 transition-[opacity,transform] duration-[var(--dur-base)] ease-[var(--ease-out)]", open && "rotate-90 opacity-0")} />
-                <X strokeWidth={1.75} className={cn("absolute inset-0 transition-[opacity,transform] duration-[var(--dur-base)] ease-[var(--ease-out)]", !open && "-rotate-90 opacity-0")} />
+                {/* Tailwind 4 turns with `rotate`, not `transform`. */}
+                <Menu strokeWidth={1.75} className={cn("absolute inset-0 transition-[opacity,rotate] duration-[var(--dur-base)] ease-[var(--ease-out)]", open && "rotate-90 opacity-0")} />
+                <X strokeWidth={1.75} className={cn("absolute inset-0 transition-[opacity,rotate] duration-[var(--dur-base)] ease-[var(--ease-out)]", !open && "-rotate-90 opacity-0")} />
               </span>
               <span>{open ? c.closeMenu : c.menu}</span>
             </button>
@@ -166,6 +184,18 @@ export function SiteHeader() {
         </div>
       </header>
 
+      {/* The page behind the open menu, dimmed; a tap on it closes the menu. */}
+      <div
+        aria-hidden="true"
+        onClick={closeMenu}
+        className={cn(
+          "fixed inset-0 z-40 bg-void/60 md:hidden",
+          open
+            ? "visible opacity-100 transition-opacity duration-[var(--dur-slow)] ease-[var(--ease-out)]"
+            : "invisible opacity-0 transition-[opacity,visibility] duration-[var(--dur-base)] ease-[var(--ease-in)]",
+        )}
+      />
+
       <div
         id="mobile-menu"
         ref={panelRef}
@@ -174,50 +204,68 @@ export function SiteHeader() {
         aria-label={c.menu}
         inert={!open}
         className={cn(
-          "fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 overflow-y-auto overscroll-contain bg-paper md:hidden",
-          "duration-[var(--dur-base)] ease-[var(--ease-out)]",
-          // Opening: visible straight away (focus can land in it), then fade
-          // in. Closing: fade out, and only then hide.
+          // Half the screen, but never so narrow that "Resources" wraps.
+          "fixed inset-y-0 right-0 z-40 flex w-[min(100%,max(50%,13.5rem))] flex-col bg-ink text-paper shadow-[-20px_0_40px_-24px_rgb(2_16_31/0.8)] md:hidden",
+          // A stitched hem down the inner edge: the site's dashed thread.
+          "before:pointer-events-none before:absolute before:inset-y-0 before:left-2 before:border-l-2 before:border-dashed before:border-[color:var(--stitch)]",
+          // Opening: visible straight away (focus can land in it), then slide
+          // in. Closing: slide out a little faster, and only then hide.
           open
-            ? "visible translate-y-0 opacity-100 transition-[opacity,transform]"
-            : "invisible -translate-y-2 opacity-0 transition-[opacity,transform,visibility]",
+            ? "visible translate-x-0 transition-[translate] duration-[var(--dur-slow)] ease-[var(--ease-out)]"
+            : "invisible translate-x-full transition-[translate,visibility] duration-[var(--dur-base)] ease-[var(--ease-in)]",
         )}
       >
-        <nav aria-label="Main" className="container-site py-6">
-          <ul className="grid gap-1">
-            {menuItems.map((item, i) => (
-              <li
-                key={item.to}
-                className={cn(
-                  "border-b border-dashed border-thread pb-1 transition-[opacity,transform] duration-[var(--dur-slow)] ease-[var(--ease-out)]",
-                  open ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0",
-                )}
-                style={{ transitionDelay: open ? `${40 + i * 30}ms` : "0ms" }}
-              >
-                <Link
-                  to={item.to}
-                  hash={hashFor(item.to)}
-                  activeOptions={{ exact: item.to === "/", includeHash: false }}
-                  className={panelLink}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        {/* Same row as the bar's (py-2 + 44px), so Close sits exactly where Menu was. */}
+        <div className="flex shrink-0 items-center justify-end px-4 py-2">
           <button
             type="button"
-            onClick={() => {
-              setOpen(false);
-              buttonRef.current?.focus({ preventScroll: true });
-            }}
-            className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[6px] text-ink transition-colors duration-[var(--dur-fast)] hover:bg-bar/60"
+            onClick={closeMenu}
+            className="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-[6px] px-2 text-paper transition-colors duration-[var(--dur-fast)] hover:bg-white/10"
           >
-            <X strokeWidth={1.75} aria-hidden="true" />
+            <X strokeWidth={1.75} className="size-6" aria-hidden="true" />
             {c.closeMenu}
           </button>
-        </nav>
+        </div>
+
+        <div className="flex flex-1 flex-col overflow-y-auto overscroll-contain pb-6 pl-4 pr-4 [scrollbar-color:var(--color-mist)_transparent] [scrollbar-width:thin]">
+          <nav aria-label="Main">
+            {drawerItems.map((group, g) => (
+              <ul key={g} className={cn(g > 0 && "mt-4 border-t-2 border-dashed border-[color:var(--stitch)] pt-4")}>
+                {group.items.map((item, i) => {
+                  const n = g * c.nav.length + i;
+                  return (
+                    <li
+                      key={item.to}
+                      // The links settle in one after another as the drawer arrives.
+                      className={cn(
+                        "transition-[opacity,translate] duration-[var(--dur-slow)] ease-[var(--ease-out)] motion-reduce:delay-0!",
+                        open ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0",
+                      )}
+                      style={{ transitionDelay: open ? `${80 + n * 35}ms` : "0ms" }}
+                    >
+                      <Link
+                        to={item.to}
+                        hash={hashFor(item.to)}
+                        activeOptions={{ exact: item.to === "/", includeHash: false }}
+                        className={cn(drawerLink, group.cls)}
+                        onClick={() => setOpen(false)}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="size-2 shrink-0 rounded-[2px] bg-bar opacity-0 transition-opacity duration-[var(--dur-fast)] group-aria-[current=page]:opacity-100"
+                        />
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ))}
+          </nav>
+          <p className="mt-auto pt-10 text-[length:var(--text-step--1)] text-mist">
+            {c.madeBy} {en.credits.people.name}
+          </p>
+        </div>
       </div>
     </>
   );

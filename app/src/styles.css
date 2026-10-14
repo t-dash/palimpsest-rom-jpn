@@ -130,6 +130,12 @@
     outline: 2px solid var(--color-blue);
     outline-offset: 2px;
   }
+  /* On the navy surfaces (hero, era cards, "Why this project", the menu
+     drawer) the blue ring would vanish (1.45:1 on ink): paper there (12.41). */
+  .bg-ink :focus-visible,
+  .bg-void :focus-visible {
+    outline-color: var(--color-paper);
+  }
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
