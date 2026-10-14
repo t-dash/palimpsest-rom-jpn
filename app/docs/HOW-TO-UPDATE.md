@@ -1,9 +1,11 @@
 # How to update Quilted Languages
 
 Everything you'll change lives in four files — you don't need to write code.
-Copy a prompt below into your Lovable chat, fill in the lines after the
-colons, and send it. Each prompt changes only one file, so it uses very few
-credits. You can add several items in one prompt: repeat the block.
+Open Claude Code (or another AI coding assistant) in the `app` folder, copy a
+prompt below into it, fill in the lines after the colons, and send it. Each
+prompt changes only one file. You can add several items in one prompt: repeat
+the block. Then publish the change (see README.md at the top of the repo):
+`npm run pages`, commit, push.
 
 | What | File |
 |---|---|
@@ -18,7 +20,7 @@ Rules the site keeps for you:
 - A source must have a title and a full `https://` link, or the word hides.
 - Disputed words need both views, each with its own source.
 - Romanian letters: use **ș ț** (comma below), never ş ţ (cedilla). The site
-  refuses to build if a cedilla slips in. Lovable may type the wrong one;
+  refuses to build if a cedilla slips in. An assistant may type the wrong one;
   check after it replies.
 - Eras are: Pre-history, 500s CE, 1400s CE, 1600s CE, 1850s CE, 1950s CE,
   2000s CE.

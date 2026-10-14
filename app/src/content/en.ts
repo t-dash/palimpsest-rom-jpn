@@ -275,7 +275,7 @@ export const en = {
       {
         title: draft("Hosting"),
         body: draft(
-          "The site is hosted by Lovable. Like most hosts, Lovable may record basic visit information, such as which pages are viewed, to run the service.",
+          "The site is hosted on GitHub Pages. Like most hosts, GitHub may record basic visit information, such as visitors' IP addresses, to keep the service secure and running.",
         ),
       },
       {
