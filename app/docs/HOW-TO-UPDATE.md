@@ -136,10 +136,8 @@ They agreed to be named on the site: yes
 
 ## If you add Japanese words
 
-The site ships only the parts of the Japanese font it needs. After adding
-Japanese words, ask Herdy (or run `npm run fonts:ja` locally) so the new
-characters use the site's font. Until then they show in the reader's own
-Japanese system font, which is fine, just slightly different.
+The site ships only the parts of the Japanese font it needs. `npm run pages`
+adds the new characters by itself, so there is nothing extra to do.
 
 ## Changing other page text
 
